@@ -20,5 +20,7 @@ public class GUIInGame extends GUI
 	public void render(Renderer renderer, int x, int y)
 	{
 		super.render(renderer, x, y);
+		
+		
 	}
 }
