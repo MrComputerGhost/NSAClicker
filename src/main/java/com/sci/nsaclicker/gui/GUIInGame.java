@@ -10,6 +10,7 @@ import com.sci.engine.gui.Component;
 import com.sci.engine.gui.GUI;
 import com.sci.engine.gui.components.TextButton;
 import com.sci.engine.gui.listeners.ClickListener;
+import com.sci.engine.input.Mouse;
 import com.sci.engine.util.ObjectPool;
 import com.sci.engine.util.PoolHandler;
 import com.sci.engine.util.Vector2I;
@@ -19,6 +20,7 @@ import com.sci.nsaclicker.clicker.Clicker;
 import com.sci.nsaclicker.clicker.Clickers;
 import com.sci.nsaclicker.clicker.Clickers.ClickerDefinition;
 import com.sci.nsaclicker.clicker.Clickers.Function;
+import com.sci.nsaclicker.entity.FloatyText;
 import com.sci.nsaclicker.util.ColorCache;
 
 /**
@@ -37,10 +39,12 @@ public class GUIInGame extends GUI
 	private List<Data> data;
 	private int spawnTimer;
 
+	private List<FloatyText> floatyTexts;
+
 	public GUIInGame()
 	{
 		super(0, 0, 800, 600);
-		this.stealByte = new TextButton(210 + ((580 - 210) / 2) - 100, 60, 200, 30, "Steal Byte");
+		this.stealByte = new TextButton(300, 60, 200, 30, "Steal Byte");
 		this.stealByte.addListener(new ClickListener()
 		{
 			@Override
@@ -48,13 +52,15 @@ public class GUIInGame extends GUI
 			{
 				NSAClicker.INSTANCE.steal(BigInteger.ONE);
 				GUIInGame.this.data.add(GUIInGame.this.dataPool.checkOut());
+				GUIInGame.this.floatyTexts.add(new FloatyText(Mouse.getX(), Mouse.getY(), "+1"));
 			}
 		});
 		this.add(this.stealByte);
 
+		this.floatyTexts = new ArrayList<FloatyText>();
+
 		Clickers.map(new Function()
 		{
-			private int x = 0;
 			private int y = 0;
 
 			@Override
@@ -62,7 +68,7 @@ public class GUIInGame extends GUI
 			{
 				final Clicker clicker = NSAClicker.INSTANCE.getClicker(def.name);
 				final BigInteger price = clicker.getPrice();
-				final BuyButton buy = new BuyButton(170 + this.x * 180, 140 + this.y * 40, 200, 30, price.toString() + ": " + def.name + " " + def.bps.toString() + "b/s (0)", price);
+				final BuyButton buy = new BuyButton(250, 155 + this.y * 40, 300, 30, price.toString() + ": " + def.name + " " + def.bps.toString() + "b/s (0)", price);
 				buy.addListener(new ClickListener()
 				{
 					@Override
@@ -80,17 +86,7 @@ public class GUIInGame extends GUI
 				GUIInGame.this.add(buy);
 
 				if(this.y < 10)
-				{
 					this.y++;
-				}
-				else
-				{
-					this.y = 0;
-					if(this.x < 1)
-					{
-						this.x++;
-					}
-				}
 			}
 		});
 
@@ -110,7 +106,7 @@ public class GUIInGame extends GUI
 			@Override
 			public void clean(Data t)
 			{
-				t.setX(this.rand.nextBoolean() ? (5 + this.rand.nextInt(140)) : (650 + this.rand.nextInt(140)));
+				t.setX(this.rand.nextBoolean() ? (5 + this.rand.nextInt(190)) : (600 + this.rand.nextInt(190)));
 				t.setY(-10);
 				t.setCharacter(this.randChar());
 			}
@@ -141,8 +137,11 @@ public class GUIInGame extends GUI
 	{
 		super.update();
 
+		for(FloatyText f : this.floatyTexts)
+			f.update();
+
 		this.spawnTimer++;
-		if(this.spawnTimer >= 10)
+		if(this.spawnTimer >= 7)
 		{
 			this.spawnTimer = 0;
 			this.data.add(this.dataPool.checkOut());
@@ -167,12 +166,12 @@ public class GUIInGame extends GUI
 		super.render(renderer, x, y);
 		Font font = renderer.getFont();
 
-		renderer.fillRect(150, 0, 10, 600, ColorCache.get(100, 100, 100));
-		renderer.fillRect(640, 0, 10, 600, ColorCache.get(100, 100, 100));
-		renderer.fillRect(160, 120, 640 - 150, 10, ColorCache.get(100, 100, 100));
+		renderer.fillRect(200, 0, 10, 600, ColorCache.get(100, 100, 100));
+		renderer.fillRect(590, 0, 10, 600, ColorCache.get(100, 100, 100));
+		renderer.fillRect(210, 120, 590 - 200, 10, ColorCache.get(100, 100, 100));
 
 		String str = "Stolen Bytes: " + NSAClicker.INSTANCE.getStolenBytes().toString();
-		renderer.drawString(210 + ((580 - 210) / 2) - font.getStringWidth(str) / 2, 10, str);
+		renderer.drawString(210 + ((580 - 210) / 2) - font.getStringWidth(str) / 2, 12, str);
 		str = "BPS: " + NSAClicker.INSTANCE.getTotalBPS().toString();
 		renderer.drawString(210 + ((580 - 210) / 2) - font.getStringWidth(str) / 2, 30, str);
 
@@ -181,6 +180,9 @@ public class GUIInGame extends GUI
 			Data data = this.data.get(i);
 			renderer.drawString(data.getX(), data.getY(), "" + data.getCharacter());
 		}
+
+		for(FloatyText f : this.floatyTexts)
+			renderer.render(0, 0, f);
 	}
 
 	private static class Data

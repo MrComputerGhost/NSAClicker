@@ -52,7 +52,7 @@ public class NSAClicker extends SciGame
 			int width = 6;
 			int height = 8;
 			char[] characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ    0123456789-.!?:/()".toCharArray();
-			Texture fontTexture = Texture.load(Utils.getResource("textures/font.png"));
+			Texture fontTexture = Texture.load(Utils.getResource("font.png"));
 			Font font = new Font(width, height, characters, fontTexture);
 			font.setCharCase(CharCase.UPPER);
 			renderer.setFont(font);
@@ -67,7 +67,7 @@ public class NSAClicker extends SciGame
 					NSAClicker.this.clickers.put(def.name, new Clicker(def.bps, def.initialPrice));
 				}
 			});
-			
+
 			this.gui = new GUIInGame();
 			this.bytes = BigInteger.ZERO;
 		}

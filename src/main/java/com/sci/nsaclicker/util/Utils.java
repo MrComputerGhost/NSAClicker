@@ -1,6 +1,5 @@
 package com.sci.nsaclicker.util;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
@@ -13,10 +12,12 @@ import java.io.InputStream;
 
 public final class Utils
 {
-	private Utils(){}
-	
+	private Utils()
+	{
+	}
+
 	public static InputStream getResource(String string) throws FileNotFoundException
 	{
-		return new FileInputStream("src/main/resources/" + string);
+		return Utils.class.getResourceAsStream("/" + string);
 	}
 }

@@ -1,0 +1,12 @@
+<clickers>
+	<clicker name="Hacker" initialPrice="15" bps="1" />
+	<clicker name="Brute Force" initialPrice="50" bps="3" />
+	<clicker name="Phone Tap" initialPrice="250" bps="5" />
+	<clicker name="Fake Website" initialPrice="750" bps="15" />
+	<clicker name="Backdoor" initialPrice="2500" bps="50" />
+	<clicker name="Heartbleed" initialPrice="5000" bps="100" />
+	<clicker name="Keylogger" initialPrice="7500" bps="200" />
+	<clicker name="False Server" initialPrice="15000" bps="350" />
+	<clicker name="Network Sniffer" initialPrice="20000" bps="500" />
+	<clicker name="Code Injection" initialPrice="35000" bps="1000" />
+</clickers>

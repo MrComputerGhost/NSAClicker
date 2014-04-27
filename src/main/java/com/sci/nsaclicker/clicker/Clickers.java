@@ -26,7 +26,7 @@ public final class Clickers
 	{
 		try
 		{
-			Document doc = XMLUtils.parse(Utils.getResource("xml/clickers.xml"));
+			Document doc = XMLUtils.parse(Utils.getResource("clickers.xml"));
 
 			if(doc.getDocumentElement().getNodeName().equals("clickers"))
 			{
