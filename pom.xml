@@ -2,13 +2,21 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.sci</groupId>
   <artifactId>nsaclicker</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <name>NSAClicker</name>
   
   <repositories>
     <repository>
       <id>sci4me-repo</id>
       <url>http://ci.codestripdev.com/plugin/repository/everything/</url>
+      <releases>
+        <updatePolicy>always</updatePolicy>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+         <updatePolicy>always</updatePolicy>
+         <enabled>true</enabled>
+      </snapshots>
     </repository>
   </repositories>
   
@@ -16,7 +24,7 @@
     <dependency>
       <groupId>com.sci</groupId>
       <artifactId>gameEngine</artifactId>
-      <version>0.0.2</version>
+      <version>0.0.3</version>
     </dependency>
   </dependencies>
 </project>
